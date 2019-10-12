@@ -6,7 +6,7 @@ antigen use oh-my-zsh
 
 antigen bundle command-not-found
 antigen bundle colored-man-pages
-antigen bundle magic-enter
+# antigen bundle magic-enter
 antigen bundle extract
 antigen bundle tmux
 antigen bundle git
