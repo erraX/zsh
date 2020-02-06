@@ -37,3 +37,5 @@ alias cpwd="pwd |  tr -d '\n' | pbcopy"
 
 # git
 alias glogs='git log --stat'
+alias gst='git status'
+alias gd='git diff'
