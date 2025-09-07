@@ -95,12 +95,12 @@ bindkey '^O' fzf-file-widget
 # "
 
 # Dayfox
-export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-  --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
-  --color=fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6 \
-  --color=info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847 \
-  --color=spinner:#287980,header:#955f61,border:#d3c7bb \
-  --border --height=70% --layout=reverse"
+# export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+#   --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
+#   --color=fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6 \
+#   --color=info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847 \
+#   --color=spinner:#287980,header:#955f61,border:#d3c7bb \
+#   --border --height=70% --layout=reverse"
 
 # fzf-tab configuration
 # disable sort when completing `git checkout`
@@ -177,10 +177,28 @@ setopt hist_ignore_dups
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$HOME/.cargo/bin:$PATH"
 
-# fco() {
-#   local commit
-#   commit=$(git log --oneline --decorate --graph --color=always \
-#            | fzf --ansi --no-sort --reverse --preview 'git show --color=always {1}' \
-#            | awk '{print $1}') || return
-#   git checkout "$commit"
-# }
+
+mac_is_dark() { defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi dark; }
+
+# 这两段替换成你自己的 nightfox/dayfox 固定色（就是你之前那两串 --color=...）
+__FZF_NIGHTFOX='--color=fg:#c5cdd9,bg:#192330,hl:#719cd6,fg+:#e6edf3,bg+:#29394f,hl+:#86abdc,info:#f0a988,prompt:#719cd6,pointer:#a485dd,marker:#78b892,spinner:#63cdcf,header:#aeafb0,border:#3b4261'
+__FZF_DAYFOX='--color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9,fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6,info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847,spinner:#287980,header:#955f61,border:#d3c7bb'
+
+# 用函数“包一层”，每次运行 fzf 都先判断系统是暗还是亮
+if mac_is_dark;
+  then
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+      --color=fg:#c5cdd9,bg:#192330,hl:#719cd6 \
+      --color=fg+:#e6edf3,bg+:#29394f,hl+:#86abdc \
+      --color=info:#f0a988,prompt:#719cd6,pointer:#a485dd,marker:#78b892 \
+      --color=spinner:#63cdcf,header:#aeafb0,border:#3b4261 \
+      --border --height=70% --layout=reverse"
+  else 
+    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+      --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
+      --color=fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6 \
+      --color=info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847 \
+      --color=spinner:#287980,header:#955f61,border:#d3c7bb \
+      --border --height=70% --layout=reverse"
+fi
+
