@@ -24,15 +24,19 @@ zinit snippet OMZP::git
 autoload -U compinit && compinit
 zinit cdreplay -q
 
+[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
+
+# bun completions
+[ -s "/Users/niminjie/.bun/_bun" ] && source "/Users/niminjie/.bun/_bun"
+
+# bun
+export BUN_INSTALL="$HOME/.bun"
+export PATH="$BUN_INSTALL/bin:$HOME/.cargo/bin:$PATH"
+
 
 alias vi=nvim
 alias src='source ~/.zshrc'
-alias a=ls
 alias c=clear
-alias su='su -m'
-alias df='df -h'
-alias du='du -h -d 2'
-alias tf='tail -f'
 
 # common directories
 alias wk='cd ~/workspace'
@@ -75,6 +79,7 @@ alias gcb="git branch | fzf --preview 'git show --color=always {-1}' \
                  --bind 'enter:become(git checkout {-1})' \
                  --tmux
 "
+
 # Unbind ALT-C (escape + c)
 bindkey -r '^[c'
 # Rebind to e.g. CTRL-F (replace with whatever key sequence you want)
@@ -84,23 +89,6 @@ bindkey '^F' fzf-cd-widget
 bindkey -r '^[t'
 # Rebind to e.g. CTRL-F (replace with whatever key sequence you want)
 bindkey '^O' fzf-file-widget
-
-# tokyo day
-# export FZF_DEFAULT_OPTS="
-#   --color=fg:#3760bf,bg:#e1e2e7,hl:#b15c00 \
-#   --color=fg+:#3760bf,bg+:#d5d6db,hl+:#b15c00 \
-#   --color=info:#007197,prompt:#9854f1,pointer:#007197 \
-#   --color=marker:#9854f1,spinner:#b15c00,header:#587539 \
-#   --color=border:#c4c5cf
-# "
-
-# Dayfox
-# export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-#   --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
-#   --color=fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6 \
-#   --color=info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847 \
-#   --color=spinner:#287980,header:#955f61,border:#d3c7bb \
-#   --border --height=70% --layout=reverse"
 
 # fzf-tab configuration
 # disable sort when completing `git checkout`
@@ -122,14 +110,8 @@ zstyle ':fzf-tab:*' fzf-flags --color=fg:1,fg+:2 --bind=tab:accept
 zstyle ':fzf-tab:*' use-fzf-default-opts yes
 # switch group using `<` and `>`
 zstyle ':fzf-tab:*' switch-group '<' '>'
-# zstyle ':fzf-tab:*' fzf-command ftb-tmux-popup
-#
-# fzf-tab configuration
 
-# eval $(thefuck --alias)
-# eval "$(zoxide init --cmd cd zsh)"
 
-[ -f /opt/homebrew/etc/profile.d/autojump.sh ] && . /opt/homebrew/etc/profile.d/autojump.sh
 
 # source ~/completion-for-pnpom.zsh
 
@@ -161,44 +143,9 @@ setopt hist_save_no_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 
-# Completion styling
-# zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
-# zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
-# zstyle ':completion:*' menu no
-# zstyle ':fzf-tab:complete:cd:*' fzf-preview 'ls --color $realpath'
-# zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
-
-# cd ~/workspace
-
-# bun completions
-[ -s "/Users/niminjie/.bun/_bun" ] && source "/Users/niminjie/.bun/_bun"
-
-# bun
-export BUN_INSTALL="$HOME/.bun"
-export PATH="$BUN_INSTALL/bin:$HOME/.cargo/bin:$PATH"
-
-
-mac_is_dark() { defaults read -g AppleInterfaceStyle 2>/dev/null | grep -qi dark; }
-
-# 这两段替换成你自己的 nightfox/dayfox 固定色（就是你之前那两串 --color=...）
-__FZF_NIGHTFOX='--color=fg:#c5cdd9,bg:#192330,hl:#719cd6,fg+:#e6edf3,bg+:#29394f,hl+:#86abdc,info:#f0a988,prompt:#719cd6,pointer:#a485dd,marker:#78b892,spinner:#63cdcf,header:#aeafb0,border:#3b4261'
-__FZF_DAYFOX='--color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9,fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6,info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847,spinner:#287980,header:#955f61,border:#d3c7bb'
-
-# 用函数“包一层”，每次运行 fzf 都先判断系统是暗还是亮
-if mac_is_dark;
-  then
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-      --color=fg:#c5cdd9,bg:#192330,hl:#719cd6 \
-      --color=fg+:#e6edf3,bg+:#29394f,hl+:#86abdc \
-      --color=info:#f0a988,prompt:#719cd6,pointer:#a485dd,marker:#78b892 \
-      --color=spinner:#63cdcf,header:#aeafb0,border:#3b4261 \
-      --border --height=70% --layout=reverse"
-  else 
-    export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-      --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
-      --color=fg+:#3d2b5a,bg+:#e7d2be,hl+:#4863b6 \
-      --color=info:#ac5402,prompt:#2848a9,pointer:#6e33ce,marker:#396847 \
-      --color=spinner:#287980,header:#955f61,border:#d3c7bb \
-      --border --height=70% --layout=reverse"
-fi
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --color=fg:#c0caf5,bg:#24283b,hl:#7aa2f7 \
+  --color=fg+:#c0caf5,bg+:#1f2335,hl+:#7dcfff \
+  --color=info:#7aa2f7,prompt:#ff9e64,pointer:#bb9af7,marker:#9ece6a,spinner:#7aa2f7 \
+  --color=header:#565f89,border:#3b4261"
 
