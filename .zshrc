@@ -7,6 +7,8 @@ fi
 
 eval "$(/opt/homebrew/bin/brew shellenv)"
 
+export XDG_CONFIG_HOME="$HOME/.config"
+
 ZINIT_HOME="${XDG_DATA_HOME:-${HOME}/.local/share}/zinit/zinit.git"
 [ ! -d $ZINIT_HOME ] && mkdir -p "$(dirname $ZINIT_HOME)"
 [ ! -d $ZINIT_HOME/.git ] && git clone https://github.com/zdharma-continuum/zinit.git "$ZINIT_HOME"
@@ -143,9 +145,48 @@ setopt hist_save_no_dups
 setopt hist_save_no_dups
 setopt hist_ignore_dups
 
+# tokyo-night storm
+# export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+#   --color=fg:#c0caf5,bg:#24283b,hl:#7aa2f7 \
+#   --color=fg+:#c0caf5,bg+:#1f2335,hl+:#7dcfff \
+#   --color=info:#7aa2f7,prompt:#ff9e64,pointer:#bb9af7,marker:#9ece6a,spinner:#7aa2f7 \
+#   --color=header:#565f89,border:#3b4261"
+
+# dayfox
+# export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+#   --color=fg:#3d2b5a,bg:#f6f2ee,hl:#2848a9 \
+#   --color=fg+:#3d2b5a,bg+:#e4dcd4,hl+:#287980 \
+#   --color=info:#2848a9,prompt:#ac5402,pointer:#6e33ce,marker:#396847,spinner:#287980 \
+#   --color=header:#352c24,border:#e4dcd4"
+
+# VS Code Modern Light (fzf)
 export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
-  --color=fg:#c0caf5,bg:#24283b,hl:#7aa2f7 \
-  --color=fg+:#c0caf5,bg+:#1f2335,hl+:#7dcfff \
-  --color=info:#7aa2f7,prompt:#ff9e64,pointer:#bb9af7,marker:#9ece6a,spinner:#7aa2f7 \
-  --color=header:#565f89,border:#3b4261"
+  --color=fg:#1f1f1f,bg:#ffffff,hl:#0078d4 \
+  --color=fg+:#1f1f1f,bg+:#e5e5e5,hl+:#008080 \
+  --color=info:#0078d4,prompt:#ca5010,pointer:#b4009e,marker:#107c10,spinner:#008080 \
+  --color=header:#6b6b6b,border:#e5e5e5"
+
+# Solarized Dark (fzf)
+export FZF_DEFAULT_OPTS="$FZF_DEFAULT_OPTS \
+  --color=fg:#839496,bg:#002b36,hl:#268bd2 \
+  --color=fg+:#93a1a1,bg+:#073642,hl+:#2aa198 \
+  --color=info:#268bd2,prompt:#b58900,pointer:#6c71c4,marker:#859900,spinner:#2aa198 \
+  --color=header:#586e75,border:#073642"
+
+# Added by Antigravity
+export PATH="/Users/niminjie/.antigravity/antigravity/bin:$PATH"
+
+# pnpm
+export PNPM_HOME="/Users/niminjie/Library/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+export PATH="$HOME/.local/bin:$PATH"
+
+
+# Added by Antigravity
+export PATH="/Users/niminjie/.antigravity/antigravity/bin:$PATH"
+export PATH="$PATH:/Users/niminjie/go/bin"
 
